@@ -3,12 +3,15 @@ const app = express();
 const path = require('path');
 const mysql = require('mysql2');
 const multer = require('multer');
+const dotenv = require('dotenv');
+
+dotenv.config({ path:'./.env'})
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'dbPAC'
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE,
 })
 
 /*const db = mysql.createConnection({
