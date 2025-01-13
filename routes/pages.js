@@ -1,8 +1,8 @@
 const express = require('express');
-const app = express();
-const path = require('path');
+const router = express.Router();
 const mysql = require('mysql2');
-//const multer = require('multer');
+const multer = require('multer');
+const path = require('path');
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -19,15 +19,6 @@ const db = mysql.createConnection({
 })
 */
 
-db.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        return;
-    }
-
-    console.log('Connected to MySQL database successfully.');
-})
-/*
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/');
@@ -38,15 +29,8 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage });
-*/
-app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/',require('./routes/pages'));
-
-/*
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     const sql = "SELECT * FROM products";
 
     db.query(sql, (err, results) => {
@@ -59,11 +43,11 @@ app.get('/', (req, res) => {
     })
 });
 
-app.get('/create', (req, res) => {
+router.get('/create', (req, res) => {
     res.render('create');
 })
 
-app.post('/create', upload.single('image'), (req, res) => {
+router.post('/create', upload.single('image'), (req, res) => {
     const { name, description } = req.body;
     const image = req.file ? req.file.filename : null;
 
@@ -74,7 +58,7 @@ app.post('/create', upload.single('image'), (req, res) => {
     })
 })
 
-app.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', (req, res) => {
     const sql = "SELECT * FROM products WHERE id = ?";
     db.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
@@ -82,7 +66,7 @@ app.get('/edit/:id', (req, res) => {
     });
 })
 
-app.post('/edit/:id', upload.single('image'), (req, res) => {
+router.post('/edit/:id', upload.single('image'), (req, res) => {
     const { name, description } = req.body;
     const image = req.file ? req.file.filename : req.body.oldImage;
 
@@ -93,7 +77,7 @@ app.post('/edit/:id', upload.single('image'), (req, res) => {
     })
 })
 
-app.get('/delete/:id', (req, res) => {
+router.get('/delete/:id', (req, res) => {
     const sql = "DELETE FROM products WHERE id = ?";
     db.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
@@ -101,14 +85,12 @@ app.get('/delete/:id', (req, res) => {
     });
 })
 
-app.get('/about', (req, res) => {
+router.get('/about', (req, res) => {
     res.render('about', { title: 'About'});
 });
 
-app.get('/contact', (req, res) => {
+router.get('/contact', (req, res) => {
     res.render('contact', { title: 'Contact'});
 });
-*/
-app.listen(3000, () => {
-    console.log("Server is running...");
-});
+
+module.exports =  router;
