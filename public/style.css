@@ -5,7 +5,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.menu {
+/*.menu {
     display: flex;
     list-style: none;
     background-color: #222;
@@ -15,6 +15,48 @@
         margin-right: 20px;
         a {
             color: #fff;
+        }
+    }
+}*/
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #008DDA;
+    padding: 1rem 2rem;
+    align-items: center;
+
+    .logo {
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+        list-style: none;
+
+        li {
+            margin-left: 1rem;
+
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .login-btn {
+                background-color: green;
+                padding: 0.5rem;
+                border-radius: 5px;
+            }
+
+            .logout-btn {
+                background-color: orangered;
+                padding: 0.5rem;
+                border-radius: 5px;
+            }
         }
     }
 }

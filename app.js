@@ -11,6 +11,14 @@ const db = mysql.createConnection({
     database: 'dbPAC'
 })
 
+/*const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'premier_sa',
+    password: 'Premier@021812299',
+    database: 'pac_system'
+})
+*/
+
 db.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err);
