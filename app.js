@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mysql = require('mysql2');
+const session = require('express-session');
+const bodyParser = require('body-parser');
 //const multer = require('multer');
 
 const db = mysql.createConnection({
@@ -39,12 +41,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 */
+
+// Setup middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(session({
+    secret: 'nodesecret',
+    resave: false,
+    saveUninitialized: true
+}))
+
 app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/',require('./routes/pages'));
-
 /*
 app.get('/', (req, res) => {
     const sql = "SELECT * FROM products";
