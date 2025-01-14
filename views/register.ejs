@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/register.css">
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Register</h2>
+
+        <form action="/register" method="POST">
+            <label>Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter your name">
+            <label>Email</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email">
+            <label>Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter your password">
+            <label>Confirm password</label>
+            <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Enter your confirm password">
+            <button type="submit">Register</button>
+        </form>
+
+        <div class="register-link">
+            <a href="/login">Go to login</a>
+        </div>
+                <!-- Display success or error message -->
+                <% if (typeof success_msg !== 'undefined') { %>
+                    <p style="color: green;"><%= success_msg %></p>
+                <% } %>
+                <% if (typeof error_msg !== 'undefined') { %>
+                    <p style="color: red;"><%= error_msg %></p>
+                <% } %>
+    </div>
+    
+</body>
+</html>

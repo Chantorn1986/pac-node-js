@@ -8,9 +8,30 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <%- include('partials/nav'); %>
-    <h1>Welcome to home page</h1>
+    <nav>
+        <div class="logo">
+            <a href="/">PAC NodeJS</a>
+        </div>
 
+        <ul class="menu">
+            <% if (typeof user !== 'undefined') { %>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/logout" class="logout-btn">Logout</a></li>
+            <% } else { %>
+                <li><a href="/login" class="login-btn">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            <% } %>
+            
+        </ul>
+    </nav>
+    <h1>Welcome to home page</h1>
+    <div>
+        <% if (typeof user !== 'undefined') { %>
+            <h1>Hello, <%= user.name %></h1>
+            <p>Email : <%= user.email %></p>
+            <p>Welcome to the home page</p>
+        <% } %>
+    </div>
     <table>
         <thead>
             <tr>

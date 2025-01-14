@@ -3,6 +3,9 @@ const router = express.Router();
 const mysql = require('mysql2');
 const multer = require('multer');
 const path = require('path');
+const bcrypt = require('bcryptjs');
+
+const { login,register } = require("../controllers/auth");
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -30,7 +33,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.get('/', (req, res) => {
+router.get('/viwe', (req, res) => {
     const sql = "SELECT * FROM products";
 
     db.query(sql, (err, results) => {
@@ -92,5 +95,47 @@ router.get('/about', (req, res) => {
 router.get('/contact', (req, res) => {
     res.render('contact', { title: 'Contact'});
 });
+
+function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        return next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
+function ifLoggedIn(req, res, next) {
+    if (req.session.user) {
+        return res.redirect('/home');
+    }
+    next();
+}
+
+// GET Routes
+router.get('/', (req, res) => {
+    res.render('index', { user: req.session.user });
+})
+
+router.get('/login', ifLoggedIn, (req, res) => {
+    res.render('login');
+})
+
+router.get('/register', ifLoggedIn, (req, res) => {
+    res.render('register');
+})
+
+router.get('/home', isAuthenticated, (req, res) => {
+    console.log(req.session.user);
+    res.render('home', { user: req.session.user });
+})
+
+router.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+})
+
+router.post('/register',register);
+
+router.post('/login',login);
 
 module.exports =  router;
